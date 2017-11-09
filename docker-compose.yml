@@ -1,0 +1,45 @@
+version: '3.2'
+
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file: .env
+    depends_on:
+      - redis
+    ports:
+      - "5000:5000"
+    command: npm start
+    tty: true
+    volumes:
+      - lib:/usr/src/lib
+      - ./backend:/usr/src/server
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - lib:/usr/src/lib
+    links:
+      - backend:backend
+      - client:client
+    env_file: .env
+
+  client:
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
+    command: npm start
+    volumes:
+      - lib:/usr/src/lib
+      - ./client:/usr/src/client
+
+  redis:
+    image: redis:4.0.1
+
+volumes:
+  lib:
