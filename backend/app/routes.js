@@ -1,34 +1,50 @@
-function registerVehiclePostHandler() {
+function registerVehiclePostHandler({ Vehicle }, pub) {
     return (req, res) => {
-        res.send('registered vehicle.');
+        Vehicle.create({ id: req.body.id, locations: []}, (err, created) => {
+            if (err) return res.status(500).json(err);
+            pub.publish('REGISTER_VEHICLE', JSON.stringify(req.body));
+            return res.status(204).send();
+        });
     }
 }
 
-function updateLocationPostHandler() {
+function updateLocationPostHandler({ Vehicle }, pub) {
     return (req, res) => {
-        res.send('updated vehicle location.');
+        Vehicle.update({id: req.params.id}, {$push: {locations: req.body}}, (err, updated) => {
+            if(err) return res.status(500).json(err);
+            pub.publish('UPDATE_LOCATION', JSON.stringify(req.body));
+            return res.status(204).send();
+        });
     }
 }
 
-function deregisterVehicleDeleteHandler() {
+function deregisterVehicleDeleteHandler({ Vehicle }, pub) {
     return (req, res) => {
-        res.send('deregistered vehicle location.');
+        //delete from postgres db.
+        Vehicle.remove({id: req.params.id}, (err, deleted) => {
+            if(err) return res.status(500).json(err);
+            pub.publish('DELETE_VEHICLE', JSON.stringify(req.body));
+            return res.status(204).send();
+        });
     }
 }
 
-function listVehiclesWithLastest2LocationsGetHandler() {
+function listVehiclesWithLastest2LocationsGetHandler({ Vehicle }, pub) {
     return (req, res) => {
-        res.send('listing vehicles with lastest 2 locations.');
+        Vehicle.find({}, {locations: {$slice: -2}}, (err, vehicles) => {
+            if(err) return res.status(500).json(err);
+            return res.json(vehicles);
+        });
     }
 }
 
-function configureRoutes(router) {
-    router.get('/vehicles', listVehiclesWithLastest2LocationsGetHandler());
+function configureRoutes(router, db, { pub, }) {
+    router.get('/vehicles', listVehiclesWithLastest2LocationsGetHandler(db, pub));
     
-    router.post('/vehicles', registerVehiclePostHandler());
-    router.post('/vehicle/:id/locations', updateLocationPostHandler());
-    
-    router.delete('/vehicle/:id', deregisterVehicleDeleteHandler());
+    router.post('/vehicles', registerVehiclePostHandler(db, pub));
+    router.post('/vehicles/:id/locations', updateLocationPostHandler(db, pub));
+
+    router.delete('/vehicles/:id', deregisterVehicleDeleteHandler(db, pub));
 }
 
 module.exports = configureRoutes;
