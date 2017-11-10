@@ -6,7 +6,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     env_file: .env
-    depends_on:
+    links:
+      - mongo
       - redis
     ports:
       - "5000:5000"
@@ -40,6 +41,13 @@ services:
 
   redis:
     image: redis:4.0.1
+    ports:
+      - "6379:6379"
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
 
 volumes:
   lib:
