@@ -1,8 +1,10 @@
 function registerVehiclePostHandler({ Vehicle }, pub) {
     return (req, res) => {
+        console.log('register post handler');
         Vehicle.create({ id: req.body.id, locations: []}, (err, created) => {
-            if (err) return res.status(500).json(err);
-            pub.publish('REGISTER_VEHICLE', JSON.stringify(req.body));
+            if (err || !created) return res.status(500).json(err);
+            console.log('created vehicle: ', req.body.id);
+            pub.publish('vehicles/register', JSON.stringify(req.body));
             return res.status(204).send();
         });
     }
@@ -11,8 +13,9 @@ function registerVehiclePostHandler({ Vehicle }, pub) {
 function updateLocationPostHandler({ Vehicle }, pub) {
     return (req, res) => {
         Vehicle.update({id: req.params.id}, {$push: {locations: req.body}}, (err, updated) => {
-            if(err) return res.status(500).json(err);
-            pub.publish('UPDATE_LOCATION', JSON.stringify(req.body));
+            if(err || !updated) return res.status(500).json(err);
+            const message = Object.assign({}, { id: req.params.id}, req.body);
+            pub.publish('vehicles/update_location', JSON.stringify(message));
             return res.status(204).send();
         });
     }
@@ -22,8 +25,9 @@ function deregisterVehicleDeleteHandler({ Vehicle }, pub) {
     return (req, res) => {
         //delete from postgres db.
         Vehicle.remove({id: req.params.id}, (err, deleted) => {
-            if(err) return res.status(500).json(err);
-            pub.publish('DELETE_VEHICLE', JSON.stringify(req.body));
+            if(err || !deleted) return res.status(500).json(err);
+            const message = { id: req.params.id };
+            pub.publish('vehicles/deregister', JSON.stringify(message));
             return res.status(204).send();
         });
     }
@@ -31,7 +35,7 @@ function deregisterVehicleDeleteHandler({ Vehicle }, pub) {
 
 function listVehiclesWithLastest2LocationsGetHandler({ Vehicle }, pub) {
     return (req, res) => {
-        Vehicle.find({}, {locations: {$slice: -2}}, (err, vehicles) => {
+        Vehicle.find({}, (err, vehicles) => {
             if(err) return res.status(500).json(err);
             return res.json(vehicles);
         });
