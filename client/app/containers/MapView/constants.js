@@ -1,0 +1,9 @@
+/*
+ *
+ * MapView constants
+ *
+ */
+
+export const INITIALIZE_MARKERS = 'app/MapView/INITIALIZE_MARKERS';
+export const INITIALIZE_MARKERS_ERROR = 'app/MapView/INITIALIZE_MARKERS_ERROR';
+export const INITIALIZE_MARKERS_SUCCESS = 'app/MapView/INITIALIZE_MARKERS_SUCCESS';
