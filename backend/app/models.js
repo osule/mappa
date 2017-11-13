@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = require('mongoose').Schema;
 
-mongoose.connect(`mongodb://localhost/mappa`, {
+const DB_URI = `mongodb://${process.env.MONGO_HOST}/mappa`;
+
+mongoose.connect(DB_URI, {
     useMongoClient: true,
 });
 
@@ -14,7 +16,7 @@ const vehicleSchema = mongoose.Schema({
     locations: [{lat: Number, lng: Number, at: Date,}],
 });
 
-const Vehicle = mongoose.model('Kitten', vehicleSchema);
+const Vehicle = mongoose.model('Vehicle', vehicleSchema);
 
 module.exports = {
     Vehicle,
