@@ -7,7 +7,7 @@ import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
-import { init as initializeWebsockets } from 'containers/MapView/websocket';
+import { init as initializeWebsockets } from 'containers/App/websocket';
 
 const sagaMiddleware = createSagaMiddleware();
 
