@@ -2,18 +2,21 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const redis = require('redis');
 const http_ = require('http');
+var morgan = require('morgan');
 
 const socketIO = require('socket.io');
 const configureRoutes = require('./routes');
 const db = require('./models');
 
 const app = express();
+
+
 const server = http_.createServer(app);
 const { REDIS_HOST } = process.env;
 const sub = redis.createClient(6379, REDIS_HOST), pub = redis.createClient(6379, REDIS_HOST);
 const io = socketIO(server);
 
-
+app.use(morgan('combined'));
 app.use(bodyParser.json());
 
 io.on('connection', function () { 
