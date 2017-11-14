@@ -25,7 +25,7 @@ import reducer from './reducer';
 import saga from './saga';
 import { initializeMarkers } from './actions';
 
-let google;
+const google = window.google;
 
 export class MapView extends React.Component { // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
