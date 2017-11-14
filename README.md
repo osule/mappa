@@ -29,8 +29,8 @@ APP_ENV=test docker-compose up
 ```
 Then run:
 ```bash
-docker-compose run backend yarn test
-docker-compose run client yarn test
+APP_ENV=test docker-compose run backend yarn test
+APP_ENV=test docker-compose run client yarn test
 ```
 
 ## Architecture
