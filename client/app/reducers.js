@@ -8,7 +8,6 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 
-import { UPDATE_LOCATION, DEREGISTER_VEHICLE } from 'containers/App/websocket';
 
 /*
  * routeReducer
@@ -38,25 +37,12 @@ function routeReducer(state = routeInitialState, action) {
   }
 }
 
-const socketInitialState = fromJS({
-});
-
-function socketReducer(state = socketInitialState, action) {
-  switch (action.type) {
-    case UPDATE_LOCATION:
-    case DEREGISTER_VEHICLE:
-    default:
-      return state;
-  }
-}
-
 /**
  * Creates the main reducer with the dynamically injected ones
  */
 export default function createReducer(injectedReducers) {
   return combineReducers({
     route: routeReducer,
-    socket: socketReducer,
     language: languageProviderReducer,
     ...injectedReducers,
   });
