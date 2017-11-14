@@ -25,13 +25,13 @@ import reducer from './reducer';
 import saga from './saga';
 import { initializeMarkers } from './actions';
 
-const google = window.google;
 
 export class MapView extends React.Component { // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
     this.props.initializeMarkers();
   }
   render() {
+    const google = window.google;
     const { markers } = this.props;
 
     if (markers.length === 0) return null;
