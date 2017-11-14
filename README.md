@@ -63,3 +63,29 @@ Clients will in turn update their maps to show new location and bearing for vehi
 - Mongodb:
     A document database. This allows for readily updating the schema for the records when it needs to change.
     Records can also easily be saved to the database in the format they're received.
+
+
+# APIs
+Refer to https://github.com/door2door-io/fullstack-code-challenge for information about available APIs.
+See headings:
+- [Vehicle registration](https://github.com/door2door-io/fullstack-code-challenge#vehicle-registration)
+- [Location update](https://github.com/door2door-io/fullstack-code-challenge#location-update)
+- [Vehicle deregistration](https://github.com/door2door-io/fullstack-code-challenge#vehicle-de-registration)
+- Vehicle listing
+  ```
+  GET /vehicles
+  ```
+  Response status code: 200
+  Response body:
+  ```
+   [
+       {
+           "_id":"5a09dfcebe9566000f8a2499","id":"bac5188f-67c6-4965-81dc-4ef49622e280",
+           "__v":0,
+           "locations":[
+               {"_id":"5a09dfe2be9566000f8a2566","at":"2017-11-13T18:09:38.354Z","lng":13.46139,"lat":52.45097},
+               {"_id":"5a09dfe5be9566000f8a25c7","at":"2017-11-13T18:09:41.359Z","lng":13.46101,"lat":52.45106}
+            ]
+        }
+   ]
+  ```
