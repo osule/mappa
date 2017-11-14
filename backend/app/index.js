@@ -40,7 +40,7 @@ promisifyConnection(pub, 'Redis publisher')
     sub.subscribe('vehicles/deregister', 'vehicles/update_location');
     sub.on('message', function(channel, message) {
         console.log('here', channel, message);
-        io.emit(JSON.parse(message));
+        io.emit(channel, JSON.parse(message));
     });
 })
 .then(() => {
