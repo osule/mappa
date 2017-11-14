@@ -3,14 +3,14 @@ const fetch = require('node-fetch');
 
 
 describe('Backend integration tests', () => {
-  function testListOfVehicles(done, url, expectedLocation) {
+  function testListOfVehicles(done, url, expectation) {
     fetch(url)
       .then(res => {
         expect(res.status).toBe(200);
         return res.json();
       })
       .then(json => {
-        expect(JSON.stringify(json)).toContain(JSON.stringify(expectedLocation));
+        expectation(JSON.stringify(json))
         done();
       })
       .catch(err => {
@@ -26,13 +26,36 @@ describe('Backend integration tests', () => {
       .done(done);
   })
 
-  it('Should update vehicle location', (done) => {
+  it('Should not update vehicle location', (done) => {
+    const location = { "lat": 10.0, "lng": 20.0, "at": "2017-09-01T12:00:00Z" };
+
     frisby
-      .post('http://backend:5000/vehicles/some-uuid-here', { "lat": 10.0, "lng": 20.0, "at": "2017-09-01T12:00:00Z" })
+      .post('http://backend:5000/vehicles/some-uuid-here', location)
       .expect('status', 204)
-      .then(testListOfVehicles(done, 'http://backend:5000/vehicles', { "lat": 10.0, "lng": 20.0, "at": "2017-09-01T12:00:00Z" }))
+      .then(testListOfVehicles(
+        done, 
+        'http://backend:5000/vehicles',
+        (res) => expect(res).not.toContain(JSON.stringify(location))
+      ))
       .done(done);
   });
+
+
+  it('Should update vehicle location', (done) => {
+    const location = { "lat": 52.53, "lng": 13.406, "at": "2017-09-01T12:00:00Z" };
+
+    frisby
+      .post('http://backend:5000/vehicles/some-uuid-here', location)
+      .expect('status', 204)
+      .then(testListOfVehicles(
+        done, 
+        'http://backend:5000/vehicles', 
+        (res) => expect(res).not.toContain(JSON.stringify(location))
+      ))
+      .done(done);
+  });
+
+  it('Should  update vehicle ')
 
   
   it('Should delete vehicle', (done) => {
