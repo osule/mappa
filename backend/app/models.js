@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const DATABASE = process.env.TEST ? 'test': 'mappa';
+const DATABASE = process.env.APP_ENV === 'test' ? 'test': 'mappa';
 const DB_URI = `mongodb://${process.env.MONGO_HOST}/${DATABASE}`;
 
 mongoose.connect(DB_URI, {
@@ -13,7 +13,7 @@ const vehicleSchema = mongoose.Schema({
         index: true,
         unique: true,
     },
-    locations: [{lat: Number, lng: Number, at: Date,}],
+    locations: [{ lat: Number, lng: Number, at: Date }],
 });
 
 const Vehicle = mongoose.model('Vehicle', vehicleSchema);
