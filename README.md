@@ -15,7 +15,7 @@ cp .env.sample .env
 ```
 Build the project.
 ```bash
-docker-compose build
+APP_ENV=develop docker-compose build
 ```
 Run the project.
 ```bash
