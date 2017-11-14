@@ -4,16 +4,47 @@
   "description": "API for collecting vehicle locations",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app/index.js"
+    "lint": "npm run lint:js",
+    "lint:eslint": "eslint",
+    "lint:js": "npm run lint:eslint -- . ",
+    "lint:staged": "lint-staged",
+    "pretest": "npm run lint",
+    "test": "jasmine-node ./spec --verbose",
+    "start": "node app/index.js",
+    "start-debug": "node --inspect index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.2",
+    "frisby": "^2.0.8",
+    "geolib": "^2.0.24",
+    "jasmine-node": "^1.14.5",
     "mongoose": "^4.13.1",
+    "node-fetch": "^1.7.3",
     "redis": "^2.8.0",
     "socket.io": "^2.0.4",
     "ws": "^3.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.11.0",
+    "eslint-plugin-jasmine": "^2.9.1"
+  },
+  "eslintConfig": {
+    "plugins": [
+      "jasmine"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:jasmine/recommended"
+    ],
+    "env": {
+      "node": true,
+      "es6": true,
+      "jasmine": true
+    },
+    "rules": {
+      "no-console": "warn"
+    }
   }
 }
