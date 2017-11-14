@@ -5,32 +5,36 @@ This application shows a near realtime map of vehicles and their bearings.
 
 ## Installation
 Clone this repository.
-```
+```bash
 git clone git@github.com:osule/mappa.git
 ```
 Setup your environment.
-```
+```bash
 cd mappa
 cp .env.sample .env
 ```
 Build the project.
-```
+```bash
 docker-compose build
 ```
 Run the project.
-```
+```bash
 docker-compose up
 ```
 
 ## Testing
-You can run tests inside of the docker container
+You can run tests inside of the docker container. First startup services under test.
+```bash
+TEST=1 docker-compose up
 ```
-docker-compose run -e TEST=1 backend yarn test
-docker-compose run -e TEST=1 client yarn test
+Then run:
+```bash
+docker-compose run backend yarn test
+docker-compose run client yarn test
 ```
 
 ## Architecture
-Mappa is built on a PubSub architecture.
+Fleet Mappa is built on a PubSub architecture.
 Vehicles publish their GPS coordinates to the backend server. 
 The backend server fires an event to all subscribed clients connected via sockets.
 Clients will in turn update their maps to show new location and bearing for vehicle.
