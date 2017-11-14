@@ -8,7 +8,7 @@ const selectMapViewDomain = (state) => state.get('mapView');
 /**
  * Other specific selectors
  */
-
+const selectMapViewBatch = (state) => state.getIn(['mapView', 'batch']).toJS();
 
 /**
  * Default selector used by MapView
@@ -23,4 +23,5 @@ const makeSelectMapView = () => createSelector(
 export default makeSelectMapView;
 export {
   selectMapViewDomain,
+  selectMapViewBatch,
 };

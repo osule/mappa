@@ -1,14 +1,21 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeLatest, takeEvery, all} from 'redux-saga/effects';
 
-import { INITIALIZE_MARKERS } from 'containers/MapView/constants';
-import { initializeMarkersSuccess, initializeMarkersError } from 'containers/MapView/actions';
+import { INITIALIZE_MARKERS, UPDATE_LOCATION } from 'containers/MapView/constants';
+import {
+  batchUpdateLocation,
+  batchUpdateLocationSuccess,
+  initializeMarkersSuccess,
+  initializeMarkersError,
+  updateLocationSuccess,
+} from 'containers/MapView/actions';
+import { selectMapViewBatch } from 'containers/MapView/selectors';
 import request from 'utils/request';
 
 /**
- * Github repos request/response handler
+ * Get Vehicles request/response handler
  */
 export function* getVehicles() {
-  // Select username from store
+  // fetch vehicles from backend server and write to store.
   const requestURL = 'http://localhost/vehicles';
 
   try {
@@ -19,9 +26,28 @@ export function* getVehicles() {
   }
 }
 
+
+export function* updateLocation(action) {
+  yield put(batchUpdateLocation(action.payload));
+  const batch = yield select(selectMapViewBatch);
+
+  if(batch.length === 50) {
+    yield put(updateLocationSuccess(batch));
+    yield put(batchUpdateLocationSuccess());
+  }
+}
+
+/**
+ * Get map updates request/response handler
+ */
+ function* vehicleLocationsWatcher() {
+ 
+}
+
 /**
  * Root saga manages watcher lifecycle
  */
-export default function* vehicleMarkers() {
-  yield takeLatest(INITIALIZE_MARKERS, getVehicles);
+export default function* vehicleMarkersWatcher() {
+    yield takeLatest(INITIALIZE_MARKERS, getVehicles);
+    yield takeEvery(UPDATE_LOCATION, updateLocation);
 }

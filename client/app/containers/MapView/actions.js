@@ -8,6 +8,9 @@ import {
   INITIALIZE_MARKERS,
   INITIALIZE_MARKERS_SUCCESS,
   INITIALIZE_MARKERS_ERROR,
+  BATCH_UPDATE_LOCATION,
+  BATCH_UPDATE_LOCATION_SUCCESS,
+  UPDATE_LOCATION_SUCCESS,
 } from './constants';
 
 
@@ -29,4 +32,24 @@ export function initializeMarkersError(error) {
     type: INITIALIZE_MARKERS_ERROR,
     error,
   };
+}
+
+export function updateLocationSuccess(batch) {
+  return {
+    type: UPDATE_LOCATION_SUCCESS,
+    batch,
+  }
+}
+
+export function batchUpdateLocation(payload) {
+  return {
+    type: BATCH_UPDATE_LOCATION,
+    payload,
+  }
+}
+
+export function batchUpdateLocationSuccess() {
+  return {
+    type: BATCH_UPDATE_LOCATION_SUCCESS,
+  }
 }
