@@ -35,7 +35,7 @@ function deregisterVehicleDeleteHandler({ Vehicle }, pub) {
 
 function listVehiclesWithLastest2LocationsGetHandler({ Vehicle }, pub) {
     return (req, res) => {
-        Vehicle.find({}, (err, vehicles) => {
+        Vehicle.find({ locations: { $ne: [] } }, (err, vehicles) => {
             if(err) return res.status(500).json(err);
             return res.json(vehicles);
         });
