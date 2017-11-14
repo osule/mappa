@@ -1,9 +1,10 @@
+const utils = require('../utils');
+
+
 function registerVehiclePostHandler({ Vehicle }, pub) {
     return (req, res) => {
-        console.log('register post handler');
         Vehicle.create({ id: req.body.id, locations: []}, (err, created) => {
             if (err || !created) return res.status(500).json(err);
-            console.log('created vehicle: ', req.body.id);
             pub.publish('vehicles/register', JSON.stringify(req.body));
             return res.status(204).send();
         });
@@ -12,6 +13,12 @@ function registerVehiclePostHandler({ Vehicle }, pub) {
 
 function updateLocationPostHandler({ Vehicle }, pub) {
     return (req, res) => {
+        
+        if (!utils.liesWithinBoundaryCircle(req.body.lat, req.body.lng)) {
+            console.log('lies outside');
+            return res.status(204).send();
+        }
+
         Vehicle.update({id: req.params.id}, {$push: {locations: req.body}}, (err, updated) => {
             if(err || !updated) return res.status(500).json(err);
             const message = Object.assign({}, { id: req.params.id}, req.body);
@@ -33,10 +40,10 @@ function deregisterVehicleDeleteHandler({ Vehicle }, pub) {
     }
 }
 
-function listVehiclesWithLastest2LocationsGetHandler({ Vehicle }, pub) {
+function listVehiclesWithLastest2LocationsGetHandler({ Vehicle }) {
     return (req, res) => {
         Vehicle.find({ locations: { $ne: [] } }, (err, vehicles) => {
-            if(err) return res.status(500).json(err);
+            if (err) return res.status(500).json(err);
             return res.json(vehicles);
         });
     }
