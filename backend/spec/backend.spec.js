@@ -9,11 +9,17 @@ describe('Backend integration tests', () => {
         expect(res.status).toBe(200);
         return res.json();
       })
-      .then(json => {
-        expectation(JSON.stringify(json))
+      .then((json) => {
+        const locations = [];
+        for(let record of json) {
+          for(let location of record.locations) {
+            locations.push({ lat: location.lat, lng: location.lng }); 
+          }
+        }
+        expectation(locations);
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         expect(err).toBe(undefined);
         done();
       });
@@ -30,12 +36,12 @@ describe('Backend integration tests', () => {
     const location = { "lat": 10.0, "lng": 20.0, "at": "2017-09-01T12:00:00Z" };
 
     frisby
-      .post('http://backend:5000/vehicles/some-uuid-here', location)
+      .post('http://backend:5000/vehicles/some-uuid-here/locations', location)
       .expect('status', 204)
       .then(testListOfVehicles(
         done, 
         'http://backend:5000/vehicles',
-        (res) => expect(res).not.toContain(JSON.stringify(location))
+        (locations) => expect(locations).not.toContain({ lat: location.lat, lng: location.lng })
       ))
       .done(done);
   });
@@ -45,12 +51,12 @@ describe('Backend integration tests', () => {
     const location = { "lat": 52.53, "lng": 13.406, "at": "2017-09-01T12:00:00Z" };
 
     frisby
-      .post('http://backend:5000/vehicles/some-uuid-here', location)
+      .post('http://backend:5000/vehicles/some-uuid-here/locations', location)
       .expect('status', 204)
       .then(testListOfVehicles(
         done, 
         'http://backend:5000/vehicles', 
-        (res) => expect(res).not.toContain(JSON.stringify(location))
+        (locations) => expect(locations).toContain({ lat: location.lat, lng: location.lng })
       ))
       .done(done);
   });
