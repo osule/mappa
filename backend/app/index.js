@@ -16,7 +16,7 @@ const io = socketIO(server);
 
 app.use(bodyParser.json());
 
-io.on('connection', function (socket) { 
+io.on('connection', function () { 
     console.log('WebSocket connection established');
 });
 
@@ -39,7 +39,6 @@ promisifyConnection(pub, 'Redis publisher')
 .then(() => {
     sub.subscribe('vehicles/deregister', 'vehicles/update_location');
     sub.on('message', function(channel, message) {
-        console.log('here', channel, message);
         io.emit(channel, JSON.parse(message));
     });
 })

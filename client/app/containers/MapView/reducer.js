@@ -20,19 +20,12 @@ const initialState = fromJS({
 
 function mapViewReducer(state = initialState, action) {
   let keyPath;
-  let newState;
   switch (action.type) {
     case INITIALIZE_MARKERS_SUCCESS:
       return state
         .set('markers', fromJS(action.markers));
     case UPDATE_LOCATION_SUCCESS:
-      const batch = action.batch
-      batch.forEach((vehicle) => {
-        console.log('substate id:', vehicle);
-        keyPath = ['markers', vehicle.id, 'locations'];
-        newState = state.setIn(keyPath, (state.getIn(keyPath) || List()).push(vehicle));
-      });
-      return newState;
+      return batchUpdate(state, action.batch);
     case DEREGISTER_VEHICLE:
       keyPath = ['markers', action.payload.id];
       return state.deleteIn(keyPath);
@@ -44,5 +37,15 @@ function mapViewReducer(state = initialState, action) {
       return state;
   }
 }
+
+const batchUpdate = (state, batch) => {
+  let newState;
+  let keyPath;
+  batch.forEach((vehicle) => {
+    keyPath = ['markers', vehicle.id, 'locations'];
+    newState = state.setIn(keyPath, (state.getIn(keyPath) || List()).push(fromJS(vehicle)));
+  });
+  return newState;
+};
 
 export default mapViewReducer;

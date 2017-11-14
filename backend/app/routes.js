@@ -15,7 +15,6 @@ function updateLocationPostHandler({ Vehicle }, pub) {
     return (req, res) => {
         
         if (!utils.liesWithinBoundaryCircle(req.body.lat, req.body.lng)) {
-            console.log('lies outside');
             return res.status(204).send();
         }
 

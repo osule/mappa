@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = require('mongoose').Schema;
 
-const DB_URI = `mongodb://${process.env.MONGO_HOST}/mappa`;
+const DATABASE = process.env.TEST ? 'test': 'mappa';
+const DB_URI = `mongodb://${process.env.MONGO_HOST}/${DATABASE}`;
 
 mongoose.connect(DB_URI, {
     useMongoClient: true,

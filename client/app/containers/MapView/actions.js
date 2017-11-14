@@ -38,18 +38,18 @@ export function updateLocationSuccess(batch) {
   return {
     type: UPDATE_LOCATION_SUCCESS,
     batch,
-  }
+  };
 }
 
 export function batchUpdateLocation(payload) {
   return {
     type: BATCH_UPDATE_LOCATION,
     payload,
-  }
+  };
 }
 
 export function batchUpdateLocationSuccess() {
   return {
     type: BATCH_UPDATE_LOCATION_SUCCESS,
-  }
+  };
 }

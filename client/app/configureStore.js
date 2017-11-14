@@ -5,9 +5,10 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
+import { init as initializeWebsockets } from 'containers/App/websocket';
+
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
-import { init as initializeWebsockets } from 'containers/App/websocket';
 
 const sagaMiddleware = createSagaMiddleware();
 
