@@ -16,7 +16,13 @@ import MapView from 'containers/MapView';
 export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <MapView />
+        <div>
+          <div className="title text--center">
+            <img src="https://www.door2door.io/img/d2d-logo-black.svg"/> 
+            <h1 className="inline">Fleet Mappa</h1>
+          </div>
+          <MapView />
+        </div>
     );
   }
 }

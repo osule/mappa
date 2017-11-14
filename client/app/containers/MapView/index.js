@@ -36,8 +36,10 @@ export class MapView extends React.Component { // eslint-disable-line react/pref
 
     const singleLocationMarkers = Object.keys(markers).map((key) => {
       const locations = markers[key].locations;
-      const position = locations.slice(locations.length-1)[0];
+      const lastLocationIndex = locations.length - 1;
+      const position = locations.slice(lastLocationIndex)[0];
       return {
+        id: key,
         ...markers[key],
         position,
       };
@@ -45,10 +47,10 @@ export class MapView extends React.Component { // eslint-disable-line react/pref
 
     const center = makeMapCenter(google, singleLocationMarkers);
 
-    const vehicleMarkers = singleLocationMarkers.map(({ position, locations }, idx) => 
+    const vehicleMarkers = singleLocationMarkers.map(({ position, locations, id }) => 
       <Marker
         position={{ lat: position.lat, lng: position.lng }}
-        key={idx}
+        key={id}
         icon={makeIcon(google, locations)}
       />
     );
