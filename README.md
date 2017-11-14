@@ -19,13 +19,13 @@ docker-compose build
 ```
 Run the project.
 ```bash
-docker-compose up
+APP_ENV=develop docker-compose up
 ```
 
 ## Testing
 You can run tests inside of the docker container. First startup services under test.
 ```bash
-TEST=1 docker-compose up
+APP_ENV=test docker-compose up
 ```
 Then run:
 ```bash
