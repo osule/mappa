@@ -1,14 +1,13 @@
 import io from 'socket.io-client';
+import * as mapViewActions from 'containers/MapView/constants';
 
 const uri = 'http://localhost';
-const socket = io.connect('/socket.io/');
+const socket = io.connect(uri);
 
-export const UPDATE_LOCATION = 'vehicles/update_location';
-export const DELETE_VEHICLE = 'vehicles/deregister';
 
 const messageTypes = {
-  UPDATE_LOCATION,
-  DELETE_VEHICLE,
+  UPDATE_LOCATION: 'vehicles/update_location',
+  DEREGISTER_VEHICLE: 'vehicles/deregister',
 }
 
 export function init(store) {
@@ -16,7 +15,7 @@ export function init(store) {
   Object.keys(messageTypes)
     .forEach(
         alias => socket.on(
-          messageTypes[alias], (payload) => store.dispatch({ type: messageTypes[alias], payload })
+          messageTypes[alias], (payload) => store.dispatch({ type: mapViewActions[alias], payload })
         )
     );
 }
