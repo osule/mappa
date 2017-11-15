@@ -2,7 +2,6 @@ import React from 'react';
 import sinon from 'sinon';
 
 import { shallow } from 'enzyme';
-import { GoogleMap } from 'react-google-maps';
 
 import { MapView } from '../index';
 
