@@ -21,9 +21,9 @@ h1 {
 }
 
 .title {
-    line-height: 26px;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    line-height: 7vh;
+    margin-bottom: .5vh;
+    margin-top: .5vh;
 }
 .title img {
     vertical-align: baseline;
