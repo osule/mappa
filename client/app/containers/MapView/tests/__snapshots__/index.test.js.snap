@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MapView /> should render a google map 1`] = `
+ShallowWrapper {
+  "complexSelector": ComplexSelector {
+    "buildPredicate": [Function],
+    "childrenOfNode": [Function],
+    "findWhereUnwrapped": [Function],
+  },
+  "length": 1,
+  "node": <div>
+    <GoogleMap
+        center={
+            Object {
+                "lat": 10,
+                "lng": 20,
+              }
+        }
+        defaultZoom={12}
+    >
+        
+    </GoogleMap>
+</div>,
+  "nodes": Array [
+    <div>
+      <GoogleMap
+            center={
+                  Object {
+                        "lat": 10,
+                        "lng": 20,
+                      }
+            }
+            defaultZoom={12}
+      >
+            
+      </GoogleMap>
+</div>,
+  ],
+  "options": Object {},
+  "renderer": ReactShallowRenderer {
+    "_instance": ShallowComponentWrapper {
+      "_calledComponentWillUnmount": false,
+      "_compositeType": 0,
+      "_context": Object {},
+      "_currentElement": <MapView
+        initializeMarkers={[Function]}
+        markers={Object {}}
+/>,
+      "_debugID": 1,
+      "_hostContainerInfo": null,
+      "_hostParent": null,
+      "_instance": MapView {
+        "_reactInternalInstance": [Circular],
+        "context": Object {},
+        "props": Object {
+          "initializeMarkers": [Function],
+          "markers": Object {},
+        },
+        "refs": Object {},
+        "state": null,
+        "updater": Object {
+          "enqueueCallback": [Function],
+          "enqueueCallbackInternal": [Function],
+          "enqueueElementInternal": [Function],
+          "enqueueForceUpdate": [Function],
+          "enqueueReplaceState": [Function],
+          "enqueueSetState": [Function],
+          "isMounted": [Function],
+          "validateCallback": [Function],
+        },
+      },
+      "_mountOrder": 1,
+      "_pendingCallbacks": null,
+      "_pendingElement": null,
+      "_pendingForceUpdate": false,
+      "_pendingReplaceState": false,
+      "_pendingStateQueue": null,
+      "_renderedComponent": NoopInternalComponent {
+        "_currentElement": <div>
+          <GoogleMap
+                    center={
+                              Object {
+                                        "lat": 10,
+                                        "lng": 20,
+                                      }
+                    }
+                    defaultZoom={12}
+          >
+                    
+          </GoogleMap>
+</div>,
+        "_debugID": 2,
+        "_renderedOutput": <div>
+          <GoogleMap
+                    center={
+                              Object {
+                                        "lat": 10,
+                                        "lng": 20,
+                                      }
+                    }
+                    defaultZoom={12}
+          >
+                    
+          </GoogleMap>
+</div>,
+      },
+      "_renderedNodeType": 0,
+      "_rootNodeID": 0,
+      "_topLevelWrapper": null,
+      "_updateBatchNumber": null,
+      "_warnedAboutRefsInRender": false,
+    },
+    "getRenderOutput": [Function],
+    "render": [Function],
+  },
+  "root": [Circular],
+  "unrendered": <MapView
+    initializeMarkers={[Function]}
+    markers={Object {}}
+/>,
+}
+`;

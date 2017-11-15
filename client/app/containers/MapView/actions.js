@@ -11,6 +11,7 @@ import {
   BATCH_UPDATE_LOCATION,
   BATCH_UPDATE_LOCATION_SUCCESS,
   UPDATE_LOCATION_SUCCESS,
+  DEREGISTER_VEHICLE,
 } from './constants';
 
 
@@ -51,5 +52,12 @@ export function batchUpdateLocation(payload) {
 export function batchUpdateLocationSuccess() {
   return {
     type: BATCH_UPDATE_LOCATION_SUCCESS,
+  };
+}
+
+export function deregisterVehicle(payload) {
+  return {
+    type: DEREGISTER_VEHICLE,
+    payload,
   };
 }

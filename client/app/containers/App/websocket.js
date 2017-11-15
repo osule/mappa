@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 import * as mapViewActions from 'containers/MapView/constants';
 
 const uri = 'http://localhost';
-const socket = io.connect(uri);
+export const socket = io.connect(uri);
 
 
 const messageTypes = {

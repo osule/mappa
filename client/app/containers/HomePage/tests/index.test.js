@@ -1,17 +1,17 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { shallow } from 'enzyme';
 
+import MapView from 'containers/MapView';
 import HomePage from '../index';
-import messages from '../messages';
+
 
 describe('<HomePage />', () => {
-  it('should render the page message', () => {
+  it('should render a view of the map', () => {
     const renderedComponent = shallow(
       <HomePage />
     );
     expect(renderedComponent.contains(
-      <FormattedMessage {...messages.header} />
+      <MapView />
     )).toEqual(true);
   });
 });
