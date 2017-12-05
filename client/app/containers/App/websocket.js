@@ -8,6 +8,7 @@ export const socket = io.connect(uri);
 const messageTypes = {
   UPDATE_LOCATION: 'vehicles/update_location',
   DEREGISTER_VEHICLE: 'vehicles/deregister',
+  OUT_OF_OFFICE: 'vehicles/out_of_office',
 };
 
 export function init(store) {

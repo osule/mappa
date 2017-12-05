@@ -15,6 +15,8 @@ function updateLocationPostHandler({ Vehicle }, pub) {
     return (req, res) => {
         
         if (!utils.liesWithinBoundaryCircle(req.body.lat, req.body.lng)) {
+            const message = {id: req.params.id};
+            pub.publish('vehicles/out_of_office', JSON.stringify(message));
             return res.status(204).send();
         }
 

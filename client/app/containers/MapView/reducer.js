@@ -11,11 +11,14 @@ import {
   UPDATE_LOCATION_SUCCESS,
   BATCH_UPDATE_LOCATION,
   BATCH_UPDATE_LOCATION_SUCCESS,
+  SET_OUT_OF_OFFICE,
+  SET_OUT_OF_OFFICE_SUCCESS,
   DEREGISTER_VEHICLE,
 } from './constants';
 
 const initialState = fromJS({
   markers: fromJS({}),
+  outsideOffice: fromJS([]),
 });
 
 function mapViewReducer(state = initialState, action) {
@@ -33,6 +36,8 @@ function mapViewReducer(state = initialState, action) {
       return state.set('batch', (state.get('batch') || List()).push(fromJS(action.payload)));
     case BATCH_UPDATE_LOCATION_SUCCESS:
       return state.set('batch', List());
+    case SET_OUT_OF_OFFICE:
+      return state.set('outsideOffice', state.get('outsideOffice').push(action.payload))
     default:
       return state;
   }
